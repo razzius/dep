@@ -1,17 +1,17 @@
 (ns dep.core
-  (:require [planck.http :refer [get]]
+  (:require [planck.http]
             [planck.core]))
 
 
 (def package (first *command-line-args*))
 (def url (str "https://clojars.org/api/artifacts/" package))
 
-(def res (try
-  (get url)
-  (catch js/Error e
-    (do
-      (println "err" e)
-      (throw e)))))
+(def res
+  (try (planck.http/get url)
+    (catch js/Error e
+      (do
+        (println "err" e)
+        (throw e)))))
 
 (def version (:latest_release (js->clj (.parse js/JSON (-> res :body)) :keywordize-keys true)))
 
