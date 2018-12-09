@@ -1,5 +1,6 @@
 (ns dep.core
-  (:require [planck.http :refer [get]]))
+  (:require [planck.http :refer [get]]
+            [planck.core]))
 
 
 (def package (first *command-line-args*))
